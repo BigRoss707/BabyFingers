@@ -33,6 +33,7 @@ public class TweetController : MonoBehaviour {
     private float tweetEventTimer = 0f;
     private float currentTime;
     private int activeTweet = 0;
+
     private static TweetController instance = null;
     #endregion
 

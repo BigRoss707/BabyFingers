@@ -12,8 +12,10 @@ public class EventController : MonoBehaviour {
     #region PrivateVariables
 
     private bool tweetEventActive = false;
+    private bool dialogueEventActive = false;
 
     private float tweetEventTimer = 0f;
+    private float dialogueEventTimer = 0f;
 
     private static EventController instance = null;
     #endregion
@@ -47,6 +49,11 @@ public class EventController : MonoBehaviour {
             if(TweetController.TryGetManager(out tc))
             {
                 tc.StartEvent();
+            }
+            DialogueController dc;
+            if (DialogueController.TryGetManager(out dc))
+            {
+                dc.StartEvent();
             }
             start++;
         }
