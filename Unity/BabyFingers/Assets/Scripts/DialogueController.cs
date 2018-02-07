@@ -132,11 +132,11 @@ public class DialogueController : MonoBehaviour
     /// <summary>
     /// Processes button 1 feedback for event
     /// </summary>
-    public void Button1()
+    public void DialogueButton(int buttonNum)
     {
         if (dialogueEventActive)
         {
-            if (!CorrectButton(1))
+            if (!CorrectButton(buttonNum))
             {
                 Debug.Log("Failure, wrong dialogue choice");
                 Strike();
@@ -144,40 +144,6 @@ public class DialogueController : MonoBehaviour
             EndEvent();
         }
     }
-
-    /// <summary>
-    /// Processes button 2 feedback for event
-    /// </summary>
-    public void Button2()
-    {
-        if (dialogueEventActive)
-        {
-            if (!CorrectButton(2))
-            {
-                Debug.Log("Failure, wrong dialogue choice");
-                Strike();
-            }
-            EndEvent();
-        }
-    }
-
-    /// <summary>
-    /// Processes button 3 feedback for event
-    /// </summary>
-    public void Button3()
-    {
-        if (dialogueEventActive)
-        {
-            if (!CorrectButton(3))
-            {
-                Debug.Log("Failure, wrong dialogue choice");
-                Strike();
-            }
-            EndEvent();
-        }
-    }
-
-
 
     /// <summary>
     /// Calls Strike in Event Controller denoting failure of event

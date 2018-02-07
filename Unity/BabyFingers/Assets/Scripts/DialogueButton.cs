@@ -19,7 +19,7 @@ public class DialogueButton : MonoBehaviour {
         DialogueController dc;
         if (DialogueController.TryGetManager(out dc))
         {
-            dc.Button1();
+            dc.DialogueButton(1);
         }
     }
 
@@ -28,7 +28,7 @@ public class DialogueButton : MonoBehaviour {
         DialogueController dc;
         if (DialogueController.TryGetManager(out dc))
         {
-            dc.Button2();
+            dc.DialogueButton(2);
         }
     }
 
@@ -37,7 +37,7 @@ public class DialogueButton : MonoBehaviour {
         DialogueController dc;
         if (DialogueController.TryGetManager(out dc))
         {
-            dc.Button3();
+            dc.DialogueButton(3);
         }
     }
 
