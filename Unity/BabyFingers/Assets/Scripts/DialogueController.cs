@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DialogueController : MonoBehaviour
 {
-
+    //TODO: make the length of the event vary by the amount of events so far
     #region PublicVariables
     public float maxTime = 10f;
     public float minTime = 5f;
@@ -115,6 +115,12 @@ public class DialogueController : MonoBehaviour
         option2.text = "";
         option3.text = "";
         dialogueTimerText.text = "";
+
+        EventController ec;
+        if(EventController.TryGetManager(out ec))
+        {
+            ec.SetDialogueEventInactive();
+        }
     }
 
     /// <summary>

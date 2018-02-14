@@ -485,7 +485,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25bc03a40247ea54eb72773ec8a6b8b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strikes: 3
+  currentStrikes: 0
+  maxStrikes: 3
+  score: 0
+  scoreMultiplier: 1
+  totalTime: 0
+  timeSinceLastEvent: 0
+  timeSinceDifficultyIncrease: 0
+  difficultyIncreaseFrequency: 30
+  eventFrequency: 10
+  minEventFrequency: 2
 --- !u!1 &1783297169
 GameObject:
   m_ObjectHideFlags: 0
