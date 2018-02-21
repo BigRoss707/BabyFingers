@@ -76,7 +76,7 @@ public class TweetController : MonoBehaviour {
 
         //Randomize Banned List
         PermuteBannedList();
-        UpdateBannedList();
+        //UpdateBannedList(); Should be unecessary
     }
 	
 	// Update is called once per frame
@@ -87,7 +87,7 @@ public class TweetController : MonoBehaviour {
 		if(tweetEventActive)
         {
             tweetEventTimer += Time.deltaTime;
-            tweetTimerText.text = tweetEventTimer.ToString();
+            tweetTimerText.text = tweetEventTimer.ToString("0.00");
             if(tweetEventTimer > currentTime)
             {
                 //Event timeout state
@@ -101,8 +101,25 @@ public class TweetController : MonoBehaviour {
             if (timeSinceLastBannedChange > bannedWordChangeFrequency)
             {
                 timeSinceLastBannedChange = 0;
-                PermuteBannedList();
-                UpdateBannedList();
+                int rand = Random.Range(0, 3);
+                bool notChanged = false;
+                switch (rand)
+                {
+                    case 0:
+                        PermuteBannedList();
+                        break;
+                    case 1:
+                        notChanged = AddBannedList();
+                        break;
+                    case 2:
+                        ScrambleBannedList();
+                        break;
+                }
+                if(notChanged)
+                {
+                    PermuteBannedList();
+                }
+                //UpdateBannedList(); Should be unecessary
             }
         }
     }
@@ -208,7 +225,7 @@ public class TweetController : MonoBehaviour {
     }
 
     /// <summary>
-    /// Changes/Adds a single value to the banned words list TODO:MAKE ADD VALUES
+    /// Changes/Adds a single value to the banned words list
     /// </summary>
     public void PermuteBannedList()
     {
@@ -224,14 +241,62 @@ public class TweetController : MonoBehaviour {
             }
             indexToAdd++;
         }
+        UpdateBannedList();
     }
 
     /// <summary>
-    /// TODO: Completely Scramble Banned List
+    /// Adds to the banned list or scrambles the list if it is unable to add
+    /// </summary>
+    public bool AddBannedList()
+    {
+        bool wordAdded = false;
+        if(bannedWords.Count < maxBannedWords)
+        {
+            int indexToAdd = Random.Range(0, possibleBannedWords.Count);
+            while (indexToAdd < possibleBannedWords.Count)
+            {
+                if (!bannedWords.Contains(possibleBannedWords[indexToAdd]))
+                {
+                    wordAdded = true;
+                    bannedWords.Add(possibleBannedWords[indexToAdd]);
+                    break;
+                }
+                indexToAdd++;
+            }
+        }
+        UpdateBannedList();
+        return wordAdded;
+    }
+
+    /// <summary>
+    /// Scrambles the list of banned words
     /// </summary>
     public void ScrambleBannedList()
     {
-
+        //Randomly re-add banned words equal to the number of words previously in the banned list
+        int bannedWordCount = bannedWords.Count;
+        bannedWords = new List<string>();
+        for(int i = 0; i < bannedWordCount; i++)
+        {
+            AddBannedList();
+        }
+        //If any adds fail iterate over the banned list adding words
+        //Should only occur due to bad repetitive rng or overly small banned word list
+        for (int i = 0; i < possibleBannedWords.Count; i++)
+        {
+            //if there aren't as many banned words as there should be
+            if (bannedWords.Count < bannedWordCount)
+            {
+                if (!bannedWords.Contains(possibleBannedWords[i]))
+                {
+                    bannedWords.Add(possibleBannedWords[i]);
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
     }
 
     /// <summary>

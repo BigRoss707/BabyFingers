@@ -5,10 +5,12 @@ using UnityEngine.UI;
 
 public class DialogueController : MonoBehaviour
 {
-    //TODO: make the length of the event vary by the amount of events so far
     #region PublicVariables
     public float maxTime = 10f;
     public float minTime = 5f;
+
+    public long dialogueEventCount = 0;
+    public long dialogueEventDifficultyFrequency = 2;
 
     public Text dialogueText;
     public Text option1;
@@ -90,9 +92,18 @@ public class DialogueController : MonoBehaviour
     /// </summary>
     public void StartEvent()
     {
+        //update difficulty
+        dialogueEventCount++;
+        currentTime = maxTime - dialogueEventCount / dialogueEventDifficultyFrequency;
+        if (currentTime < minTime)
+        {
+            currentTime = minTime;
+        }
+
         dialogueEventTimer = 0f;
         dialogueEventActive = true;
 
+        //Set up associated GUI
         int rand = Random.Range(0, dialogues.Count - 1);
         activeDialogue = rand;
         dialogueText.text = dialogues[rand].dialogue;
