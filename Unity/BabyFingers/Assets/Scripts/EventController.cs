@@ -38,10 +38,12 @@ public class EventController : MonoBehaviour {
     //Event activity trackers
     private bool tweetEventActive = false;
     private bool dialogueEventActive = false;
+	private bool buttonEventActive = false;
 
     //Event timers
     private float tweetEventTimer = 0f;
     private float dialogueEventTimer = 0f;
+	private float buttonEventTimer = 0f;
 
     private static EventController instance = null;
     #endregion
@@ -128,6 +130,11 @@ public class EventController : MonoBehaviour {
         tweetEventActive = false;
     }
 
+	public void SetButtonEventInactive()
+	{
+		buttonEventActive = false;
+	}
+
     /// <summary>
     /// Starts events associated with the primary event clock and frequency
     /// </summary>
@@ -138,26 +145,34 @@ public class EventController : MonoBehaviour {
         {
             timeSinceLastEvent = 0;
             int randInt = Random.Range(0, 2);
-            if ((randInt == 0) && !dialogueEventActive)
-            {
-                DialogueController dc;
-                if (DialogueController.TryGetManager(out dc))
-                {
-                    dc.StartEvent();
-                    dialogueEventActive = true;
-                }
-            }
-            else if (!tweetEventActive)
-            {
-                TweetController tc;
-                if (TweetController.TryGetManager(out tc))
-                {
-                    tc.StartEvent();
-                    tweetEventActive = true;
-                }
-            }
-
-            //TODO ADD BUTTON EVENT
+			if ((randInt >= 0) && !dialogueEventActive)
+			{
+				DialogueController dc;
+				if (DialogueController.TryGetManager (out dc))
+				{
+					dc.StartEvent ();
+					dialogueEventActive = true;
+				}
+			} 
+			else if (!tweetEventActive) 
+			{
+				TweetController tc;
+				if (TweetController.TryGetManager (out tc))
+				{
+					tc.StartEvent ();
+					tweetEventActive = true;
+				}
+			}
+			else if (!buttonEventActive)
+			{
+				ButtonController bc;
+				if (ButtonController.TryGetManager (out bc)) 
+				{
+					bc.StartEvent ();
+					buttonEventActive = true;
+				}
+			}
+				
         }
     }
 
@@ -170,8 +185,9 @@ public class EventController : MonoBehaviour {
         if (timeSinceLastSecondaryEvent > altEventFrequency)
         {
             timeSinceLastSecondaryEvent = 0;
-            int randInt = Random.Range(0, 2);
-            if ((randInt == 0) && !dialogueEventActive)
+			//Currently, there's a 40% chance of dialogue, 40% chance of tweets, and 20% chance of the nuke button
+            int randInt = Random.Range(0, 5);
+			if ((randInt >= 0 && randInt <= 1) && !dialogueEventActive)
             {
                 DialogueController dc;
                 if (DialogueController.TryGetManager(out dc))
@@ -180,7 +196,7 @@ public class EventController : MonoBehaviour {
                     dialogueEventActive = true;
                 }
             }
-            else if (!tweetEventActive)
+			else if ((randInt >= 2 && randInt <= 3) && !tweetEventActive)
             {
                 TweetController tc;
                 if (TweetController.TryGetManager(out tc))
@@ -189,9 +205,17 @@ public class EventController : MonoBehaviour {
                     tweetEventActive = true;
                 }
             }
+			else if ((randInt == 4) && !buttonEventActive)
+			{
+				ButtonController bc;
+				if (ButtonController.TryGetManager(out bc))
+				{
+					bc.StartEvent ();
+					buttonEventActive = true;
+				}
+			}
 
             //Debug.Log("SPAWNING SECONDARY EVENT");
-            //TODO ADD BUTTON EVENT WITH HEAVY WEIGHT
         }
     }
 
