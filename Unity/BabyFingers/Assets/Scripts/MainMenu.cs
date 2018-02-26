@@ -16,4 +16,10 @@ public class MainMenu : MonoBehaviour {
 		Application.Quit ();
 	}
 
+    public void LoadMainMenu()
+    {
+        Destroy(FindObjectOfType<OptionsMenu>().gameObject);
+        SceneManager.LoadScene(0);
+    }
+
 }

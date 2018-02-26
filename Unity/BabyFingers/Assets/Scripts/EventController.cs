@@ -29,6 +29,9 @@ public class EventController : MonoBehaviour {
     public double altEventFrequency = 20;
     public double minAltEventFrequency = 5;
 
+    [Tooltip("GameOver")]
+    public GameObject gameOverScreen;
+
     #endregion
 
     #region PrivateVariables
@@ -112,12 +115,21 @@ public class EventController : MonoBehaviour {
     {
         Debug.Log("STRIKE IN EVENT CONTROLLER");
         currentStrikes++;
+        StrikeController sc;
+        if(StrikeController.TryGetManager(out sc))
+        {
+            sc.IncrementStrike();
+        }
     }
 
     public void EndGame()
     {
         Debug.Log("GameOver");
         gameInProgress = false;
+        if(gameOverScreen != null)
+        {
+            gameOverScreen.SetActive(true);
+        }
     }
 
     public void SetDialogueEventInactive()
