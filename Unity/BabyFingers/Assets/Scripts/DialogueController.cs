@@ -77,7 +77,7 @@ public class DialogueController : MonoBehaviour
         if (dialogueEventActive)
         {
             dialogueEventTimer += Time.deltaTime;
-            dialogueTimerText.text = dialogueEventTimer.ToString("0.00");
+            dialogueTimerText.text = (currentTime-dialogueEventTimer).ToString("0.00");
             if (dialogueEventTimer > currentTime)
             {
                 //Event timeout state

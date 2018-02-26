@@ -87,7 +87,7 @@ public class TweetController : MonoBehaviour {
 		if(tweetEventActive)
         {
             tweetEventTimer += Time.deltaTime;
-            tweetTimerText.text = tweetEventTimer.ToString("0.00");
+            tweetTimerText.text = (currentTime - tweetEventTimer).ToString("0.00");
             if(tweetEventTimer > currentTime)
             {
                 //Event timeout state

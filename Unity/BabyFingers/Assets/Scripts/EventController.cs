@@ -144,8 +144,8 @@ public class EventController : MonoBehaviour {
         if (timeSinceLastEvent > eventFrequency)
         {
             timeSinceLastEvent = 0;
-            int randInt = Random.Range(0, 2);
-			if ((randInt >= 0) && !dialogueEventActive)
+            int randInt = Random.Range(0, 5);
+			if ((randInt >= 0 && randInt <= 1) && !dialogueEventActive)
 			{
 				DialogueController dc;
 				if (DialogueController.TryGetManager (out dc))
@@ -154,7 +154,7 @@ public class EventController : MonoBehaviour {
 					dialogueEventActive = true;
 				}
 			} 
-			else if (!tweetEventActive) 
+			else if ((randInt >= 2 && randInt <= 3) && !tweetEventActive) 
 			{
 				TweetController tc;
 				if (TweetController.TryGetManager (out tc))
@@ -187,7 +187,16 @@ public class EventController : MonoBehaviour {
             timeSinceLastSecondaryEvent = 0;
 			//Currently, there's a 40% chance of dialogue, 40% chance of tweets, and 20% chance of the nuke button
             int randInt = Random.Range(0, 5);
-			if ((randInt >= 0 && randInt <= 1) && !dialogueEventActive)
+            if ((randInt >= 0 && randInt <= 2) && !buttonEventActive)
+            {
+                ButtonController bc;
+                if (ButtonController.TryGetManager(out bc))
+                {
+                    bc.StartEvent();
+                    buttonEventActive = true;
+                }
+            }
+            else if ((randInt == 3) && !dialogueEventActive)
             {
                 DialogueController dc;
                 if (DialogueController.TryGetManager(out dc))
@@ -196,7 +205,7 @@ public class EventController : MonoBehaviour {
                     dialogueEventActive = true;
                 }
             }
-			else if ((randInt >= 2 && randInt <= 3) && !tweetEventActive)
+			else if (!tweetEventActive)
             {
                 TweetController tc;
                 if (TweetController.TryGetManager(out tc))
@@ -205,15 +214,7 @@ public class EventController : MonoBehaviour {
                     tweetEventActive = true;
                 }
             }
-			else if ((randInt == 4) && !buttonEventActive)
-			{
-				ButtonController bc;
-				if (ButtonController.TryGetManager(out bc))
-				{
-					bc.StartEvent ();
-					buttonEventActive = true;
-				}
-			}
+			
 
             //Debug.Log("SPAWNING SECONDARY EVENT");
         }

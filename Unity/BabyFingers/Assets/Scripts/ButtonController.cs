@@ -52,7 +52,7 @@ public class ButtonController : MonoBehaviour
 		if (buttonEventActive)
 		{
 			buttonEventTimer += Time.deltaTime;
-			buttonTimerText.text = buttonEventTimer.ToString("0.00");
+			buttonTimerText.text = (currentTime - buttonEventTimer).ToString("0.00");
 			if (buttonEventTimer > currentTime)
 			{
 				//Event timeout state
