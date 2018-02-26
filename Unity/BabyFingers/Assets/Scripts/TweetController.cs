@@ -345,14 +345,40 @@ public class TweetController : MonoBehaviour {
     private void _init_tweets()
     {
         tweets = new List<tweet>();
-        tweets.Add(new tweet("This is a test tweet, banned words in this tweet are tweet", new List<string> { "tweet", "newtag" }));
+        tweets.Add(new tweet("People think the wall is a bad idea. But why would it be bad when we don't have to pay for it? Mexico will make restitution for the illegal entry of thousands of Mexicans by paying for the wall. #buildthewall", new List<string> { "wall", "Mexico" }));
+        tweets.Add(new tweet("I love minorities, but we need to keep lowlifes out of our country. #BorderSecurity ", new List<string> { "minority", "border" }));
+        tweets.Add(new tweet("Jobs and wages on the rise and yet nobody seems to care. People whining on and on about Russia and the FBI! Get your priorities straight people! #MakingAmericaGreatAgain #Nobodyseemstocare", new List<string> { "Russia", "FBI" }));
+        tweets.Add(new tweet("Played some golf yesterday. I had the highest score! I am the best at golf! #greatpresident #greatgolfer", new List<string> {  }));
+        tweets.Add(new tweet("Even talk show hosts are siding with fake news outlets. Ignore their lies, down with the fake outlets!", new List<string> { "fake news" }));
+        tweets.Add(new tweet("Guns aren’t dangerous, people are dangerous. I just thought of that myself! #deepthoughts #wisepresident", new List<string> { "guns" }));
+        tweets.Add(new tweet("My nuke button is bigger than your nuke button. That means it has more nukes. Just give me a reason. #TwitchyFingers #NoMyFingersAren'tTiny", new List<string> { "nuke/nuclear" }));
+        tweets.Add(new tweet("My approval rating is low? No, your approval rating is low! #FAKENEWS!", new List<string> { "fake news"}));
+        tweets.Add(new tweet("I am the greatest great President that ever Presidented greatly #greatpresident", new List<string> {  }));
+        tweets.Add(new tweet("The wall is the best idea any president has ever had because I am the best president there ever was.", new List<string> { "wall"}));
+        tweets.Add(new tweet("Contrary to popular belief, I do not hate immigrants. I love all mexican food! What would America be like without Taco Bell!", new List<string> { "immigrant" }));
+        tweets.Add(new tweet("Psst, fellow rich people, my tax reform bill is going to make you a lot of money. #Don'tTellPoorPeople #SHHH", new List<string> { "tax" }));
+        tweets.Add(new tweet("The best thing to enter America from mexico is its food. Doritos locos tacos are amazing. Happy Cinco de Mayo! #tacos #cincodemayo", new List<string> { "Mexico" }));
+        tweets.Add(new tweet("I think it's fair to say that anyone that doesn't agree with me is guilty of treason.", new List<string> { "treason" }));
+        tweets.Add(new tweet("People are calling for the House of Representatives to impeach me, but guess what, I am the Representatives!", new List<string> { "impeach" }));
+     
     }
 
     private void _init_possible_banned_words()
     {
         possibleBannedWords = new List<string>();
-        possibleBannedWords.Add("tweet");
-        possibleBannedWords.Add("not tweet");
+        possibleBannedWords.Add("wall");
+        possibleBannedWords.Add("minority");
+        possibleBannedWords.Add("border");
+        possibleBannedWords.Add("Russia");
+        possibleBannedWords.Add("FBI");
+        possibleBannedWords.Add("fake news");
+        possibleBannedWords.Add("guns");
+        possibleBannedWords.Add("nuke/nuclear");
+        possibleBannedWords.Add("immigrant");
+        possibleBannedWords.Add("tax");
+        possibleBannedWords.Add("Mexico");
+        possibleBannedWords.Add("treason");
+        possibleBannedWords.Add("impeach");
     }
 
 }
