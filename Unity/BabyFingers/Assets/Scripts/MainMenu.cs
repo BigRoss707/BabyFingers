@@ -18,7 +18,18 @@ public class MainMenu : MonoBehaviour {
 
     public void LoadMainMenu()
     {
-        Destroy(FindObjectOfType<OptionsMenu>().gameObject);
+        try
+        {
+            GameObject om = FindObjectOfType<OptionsMenu>().gameObject;
+            if (om != null)
+            {
+                Destroy(om);
+            }
+        }
+        catch(System.Exception e)
+        {
+
+        }
         SceneManager.LoadScene(0);
     }
 
