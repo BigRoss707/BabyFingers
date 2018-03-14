@@ -42,11 +42,13 @@ public class EventController : MonoBehaviour {
     private bool tweetEventActive = false;
     private bool dialogueEventActive = false;
 	private bool buttonEventActive = false;
+    private bool golfEventActive = false;
 
-    //Event timers
+    //Event timers(UNUSED)
     private float tweetEventTimer = 0f;
     private float dialogueEventTimer = 0f;
 	private float buttonEventTimer = 0f;
+    private float golfEventTimer = 0f;
 
     private static EventController instance = null;
     #endregion
@@ -147,6 +149,11 @@ public class EventController : MonoBehaviour {
 		buttonEventActive = false;
 	}
 
+    public void SetGolfEventInactive()
+    {
+        golfEventActive = false;
+    }
+
     /// <summary>
     /// Starts events associated with the primary event clock and frequency
     /// </summary>
@@ -165,8 +172,17 @@ public class EventController : MonoBehaviour {
 					dc.StartEvent ();
 					dialogueEventActive = true;
 				}
-			} 
-			else if ((randInt >= 2 && randInt <= 3) && !tweetEventActive) 
+			}
+            if (!golfEventActive)// NEED TO INTEGRATE WITH RAND
+            {
+                GolfController gc;
+                if (GolfController.TryGetManager(out gc))
+                {
+                    gc.StartEvent();
+                    golfEventActive = true;
+                }
+            }
+            else if ((randInt >= 2 && randInt <= 3) && !tweetEventActive) 
 			{
 				TweetController tc;
 				if (TweetController.TryGetManager (out tc))
