@@ -20,6 +20,7 @@ public class EventController : MonoBehaviour {
     public double totalTime = 0;
     public double timeSinceLastEvent = 0;
     public double timeSinceLastSecondaryEvent = 0;
+    public double timeSinceLastTertiaryEvent = 0;
     public double timeSinceDifficultyIncrease = 0;
 
     [Tooltip("Frequencies")]
@@ -28,6 +29,7 @@ public class EventController : MonoBehaviour {
     public double minEventFrequency = 2;
     public double altEventFrequency = 20;
     public double minAltEventFrequency = 5;
+    public double tweetEventFrequency = 30;
 
     [Tooltip("GameOver")]
     public GameObject gameOverScreen;
@@ -83,6 +85,7 @@ public class EventController : MonoBehaviour {
             totalTime += (double)Time.deltaTime;
             timeSinceLastEvent += (double)Time.deltaTime;
             timeSinceLastSecondaryEvent += (double)Time.deltaTime;
+            timeSinceLastTertiaryEvent += (double)Time.deltaTime;
             timeSinceDifficultyIncrease += (double)Time.deltaTime;
 
             //Get harder periodically and change score modifier
@@ -163,7 +166,7 @@ public class EventController : MonoBehaviour {
         if (timeSinceLastEvent > eventFrequency)
         {
             timeSinceLastEvent = 0;
-            int randInt = Random.Range(0, 5);
+            int randInt = Random.Range(0, 7);
 			if ((randInt >= 0 && randInt <= 1) && !dialogueEventActive)
 			{
 				DialogueController dc;
@@ -173,7 +176,7 @@ public class EventController : MonoBehaviour {
 					dialogueEventActive = true;
 				}
 			}
-            if (!golfEventActive)// NEED TO INTEGRATE WITH RAND
+            else if (randInt >= 2 && randInt <= 3 && !golfEventActive)
             {
                 GolfController gc;
                 if (GolfController.TryGetManager(out gc))
@@ -182,7 +185,7 @@ public class EventController : MonoBehaviour {
                     golfEventActive = true;
                 }
             }
-            else if ((randInt >= 2 && randInt <= 3) && !tweetEventActive) 
+            else if ((randInt >= 4 && randInt <= 5) && !tweetEventActive) 
 			{
 				TweetController tc;
 				if (TweetController.TryGetManager (out tc))
@@ -213,7 +216,6 @@ public class EventController : MonoBehaviour {
         if (timeSinceLastSecondaryEvent > altEventFrequency)
         {
             timeSinceLastSecondaryEvent = 0;
-			//Currently, there's a 40% chance of dialogue, 40% chance of tweets, and 20% chance of the nuke button
             int randInt = Random.Range(0, 5);
             if ((randInt >= 0 && randInt <= 2) && !buttonEventActive)
             {
@@ -224,7 +226,16 @@ public class EventController : MonoBehaviour {
                     buttonEventActive = true;
                 }
             }
-            else if ((randInt == 3) && !dialogueEventActive)
+            else if (randInt == 3 && !golfEventActive)
+            {
+                GolfController gc;
+                if (GolfController.TryGetManager(out gc))
+                {
+                    gc.StartEvent();
+                    golfEventActive = true;
+                }
+            }
+            else if ((randInt == 4) && !dialogueEventActive)
             {
                 DialogueController dc;
                 if (DialogueController.TryGetManager(out dc))
@@ -245,6 +256,26 @@ public class EventController : MonoBehaviour {
 			
 
             //Debug.Log("SPAWNING SECONDARY EVENT");
+        }
+    }
+
+    /// <summary>
+    /// Spawns a tweet event every 30 seconds
+    /// </summary>
+    private void StartTertiaryEvent()
+    {
+        if(timeSinceLastTertiaryEvent > tweetEventFrequency)
+        {
+            timeSinceLastTertiaryEvent = 0f;
+            if(!tweetEventActive)
+            {
+                TweetController tc;
+                if (TweetController.TryGetManager(out tc))
+                {
+                    tc.StartEvent();
+                    tweetEventActive = true;
+                }
+            }
         }
     }
 
