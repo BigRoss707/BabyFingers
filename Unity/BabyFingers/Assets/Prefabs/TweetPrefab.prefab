@@ -482,7 +482,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Yes
+  m_Text: Send
 --- !u!114 &114550484581274822
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -542,7 +542,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Timer
+  m_Text: 
 --- !u!114 &114711852215651778
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -608,7 +608,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: No
+  m_Text: Don't Send
 --- !u!114 &114729969184059320
 MonoBehaviour:
   m_ObjectHideFlags: 1
