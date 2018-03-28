@@ -91,6 +91,7 @@ public class GolfController : MonoBehaviour {
         golfEventTimer = 0f;
         golfEventActive = false;
 
+        draggable.GetComponent<DragHandler>().EndDrag();
         ReparentDraggableToStart();
 
         EventController ec;
