@@ -117,13 +117,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="BabyFingers.CSharp.Plugins.csproj">
-      <Project>{C8117116-3DF6-902F-42E0-62D6E54DFF6F}</Project>
-      <Name>BabyFingers.CSharp.Plugins</Name>
-    </ProjectReference>
     <ProjectReference Include="BabyFingers.CSharp.csproj">
       <Project>{E01C98A7-4FF9-B56E-2762-F0B0290263CC}</Project>
       <Name>BabyFingers.CSharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="BabyFingers.CSharp.Plugins.csproj">
+      <Project>{C8117116-3DF6-902F-42E0-62D6E54DFF6F}</Project>
+      <Name>BabyFingers.CSharp.Plugins</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

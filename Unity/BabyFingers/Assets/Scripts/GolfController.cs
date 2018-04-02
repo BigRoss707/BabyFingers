@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GolfController : MonoBehaviour {
 
@@ -11,6 +12,7 @@ public class GolfController : MonoBehaviour {
     public GameObject start;
     public GameObject startSlot;
     public GameObject draggable;
+    public Text timer;
 
     public float maxTime = 10f;
     public float minTime = 5f;
@@ -64,6 +66,7 @@ public class GolfController : MonoBehaviour {
                 EndEvent();
                 return;
             }
+            timer.text = (currentTime - golfEventTimer).ToString("0.00");
         }
 	}
 
@@ -84,9 +87,11 @@ public class GolfController : MonoBehaviour {
 
     public void EndEvent()
     {
+        timer.text = "";
         golfEventTimer = 0f;
         golfEventActive = false;
 
+        draggable.GetComponent<DragHandler>().EndDrag();
         ReparentDraggableToStart();
 
         EventController ec;
@@ -115,18 +120,12 @@ public class GolfController : MonoBehaviour {
     {
         float minX, maxX, minY, maxY;
         RectTransform rt = dragPrefab.GetComponent<RectTransform>();
-        Debug.Log("width: " + rt.rect.width.ToString());
-        Debug.Log("height: " + rt.rect.height.ToString());
         minX = -(rt.rect.width/2);
         minY = -(rt.rect.height/2);
         maxX = goal.GetComponent<RectTransform>().rect.x;
         maxY = rt.rect.height/2;
-        Debug.Log("minX: " + minX.ToString() + " maxX: " + maxX.ToString() + " minY: " + minY.ToString() + " maxY: " + maxY.ToString());
-        //Vector3 newPos = new Vector3(Random.Range(minX, maxX), Random.Range(minY,maxY), 0);
-        //Debug.Log("newPos: " + newPos.ToString());
         RectTransform srt = start.GetComponent<RectTransform>();
         srt.anchoredPosition = new Vector2(Random.Range(minX, maxX), Random.Range(minY, maxY));
-        //srt.rect.Set(Random.Range(minX, maxX), Random.Range(minY, maxY), srt.rect.width, srt.rect.height);
         start.SetActive(true);
     }
 
