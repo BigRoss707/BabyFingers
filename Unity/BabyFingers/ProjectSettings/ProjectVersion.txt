@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 m_EditorVersion: 2017.1.3f1
+=======
+m_EditorVersion: 2017.1.2f1
+>>>>>>> origin/Cameron
