@@ -45,6 +45,7 @@ public class TweetController : MonoBehaviour {
 
     #region PrivateVariables
     private bool tweetEventActive = false;
+	private bool pauseCheck = false;
     private float tweetEventTimer = 0f;
     private float currentTime;
     private int activeTweet = 0;
@@ -80,48 +81,57 @@ public class TweetController : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-        //Update timers
-        timeSinceLastBannedChange += Time.deltaTime;
+	void Update ()
+	{
+		if (!pauseCheck)
+		{
+			//Update timers
+			timeSinceLastBannedChange += Time.deltaTime;
 
-		if(tweetEventActive)
-        {
-            tweetEventTimer += Time.deltaTime;
-            tweetTimerText.text = (currentTime - tweetEventTimer).ToString("0.00");
-            if(tweetEventTimer > currentTime)
-            {
-                //Event timeout state
-                Strike();
-                EndEvent();
-            }
-        }
-        else
-        {
-            //Change banned words
-            if (timeSinceLastBannedChange > bannedWordChangeFrequency)
-            {
-                timeSinceLastBannedChange = 0;
-                int rand = Random.Range(0, 3);
-                bool notChanged = false;
-                switch (rand)
-                {
-                    case 0:
-                        PermuteBannedList();
-                        break;
-                    case 1:
-                        notChanged = AddBannedList();
-                        break;
-                    case 2:
-                        ScrambleBannedList();
-                        break;
-                }
-                if(notChanged)
-                {
-                    PermuteBannedList();
-                }
-                //UpdateBannedList(); Should be unecessary
-            }
-        }
+			if (tweetEventActive)
+			{
+				tweetEventTimer += Time.deltaTime;
+				tweetTimerText.text = (currentTime - tweetEventTimer).ToString ("0.00");
+				if (tweetEventTimer > currentTime)
+				{
+					//Event timeout state
+					Strike ();
+					EndEvent ();
+				}
+			}
+			else
+			{
+				//Change banned words
+				if (timeSinceLastBannedChange > bannedWordChangeFrequency)
+				{
+					timeSinceLastBannedChange = 0;
+					int rand = Random.Range (0, 3);
+					bool notChanged = false;
+					switch (rand)
+					{
+					case 0:
+						PermuteBannedList ();
+						break;
+					case 1:
+						notChanged = AddBannedList ();
+						break;
+					case 2:
+						ScrambleBannedList ();
+						break;
+					}
+					if (notChanged)
+					{
+						PermuteBannedList ();
+					}
+					//UpdateBannedList(); Should be unecessary
+				}
+			}
+		}
+	
+		if (Input.GetKeyDown ("escape"))
+		{
+			PauseEvent();
+		}	
     }
 
     /// <summary>
@@ -163,6 +173,19 @@ public class TweetController : MonoBehaviour {
             ec.SetTweetEventInactive();
         }
     }
+
+	public void PauseEvent()
+	{
+		if (pauseCheck == false)
+		{
+			pauseCheck = true;
+		}
+
+		else
+		{
+			pauseCheck = false;
+		}
+	}
 
     /// <summary>
     /// Processes yes button feedback for event
