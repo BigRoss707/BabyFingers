@@ -41,6 +41,7 @@ public class DialogueController : MonoBehaviour
 
     #region PrivateVariables
     private bool dialogueEventActive = false;
+	private bool pauseCheck = false;
     private float dialogueEventTimer = 0f;
     private float currentTime;
     private int activeDialogue = 0;
@@ -74,7 +75,7 @@ public class DialogueController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (dialogueEventActive)
+        if (dialogueEventActive & !pauseCheck)
         {
             dialogueEventTimer += Time.deltaTime;
             dialogueTimerText.text = (currentTime-dialogueEventTimer).ToString("0.00");
@@ -85,6 +86,11 @@ public class DialogueController : MonoBehaviour
                 EndEvent();
             }
         }
+
+		if (Input.GetKeyDown ("escape")) 
+		{
+			PauseEvent();
+		}
     }
 
     /// <summary>
@@ -133,6 +139,19 @@ public class DialogueController : MonoBehaviour
             ec.SetDialogueEventInactive();
         }
     }
+
+	public void PauseEvent()
+	{
+		if (pauseCheck == false)
+		{
+			pauseCheck = true;
+		}
+
+		else
+		{
+			pauseCheck = false;
+		}
+	}
 
     /// <summary>
     /// Map button response to correct response

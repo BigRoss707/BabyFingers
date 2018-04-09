@@ -18,6 +18,7 @@ public class ButtonController : MonoBehaviour
 
 	#region PrivateVariables
 	private bool buttonEventActive = false;
+	private bool pauseCheck = false;
 	private float buttonEventTimer = 0f;
 	private float currentTime;
 
@@ -49,7 +50,7 @@ public class ButtonController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (buttonEventActive)
+		if (buttonEventActive & !pauseCheck)
 		{
 			buttonEventTimer += Time.deltaTime;
 			buttonTimerText.text = (currentTime - buttonEventTimer).ToString("0.00");
@@ -60,6 +61,11 @@ public class ButtonController : MonoBehaviour
 				Lose();
 				EndEvent();
 			}
+		}
+
+		if (Input.GetKeyDown ("escape"))
+		{
+			PauseEvent();
 		}
 	}
 
@@ -98,6 +104,19 @@ public class ButtonController : MonoBehaviour
 		if(EventController.TryGetManager(out ec))
 		{
 			ec.SetButtonEventInactive();
+		}
+	}
+
+	public void PauseEvent()
+	{
+		if (pauseCheck == false)
+		{
+			pauseCheck = true;
+		}
+
+		else
+		{
+			pauseCheck = false;
 		}
 	}
 

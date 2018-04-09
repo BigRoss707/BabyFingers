@@ -34,6 +34,9 @@ public class EventController : MonoBehaviour {
     [Tooltip("GameOver")]
     public GameObject gameOverScreen;
 
+	[Tooltip("Paused")]
+	public GameObject pauseScreen;
+
     #endregion
 
     #region PrivateVariables
@@ -114,6 +117,11 @@ public class EventController : MonoBehaviour {
                 EndGame();
             }
         }
+			
+		if (Input.GetKeyDown ("escape")) 
+		{
+			PauseGame();
+		}
 	}
 
     public void Strike()
@@ -136,6 +144,29 @@ public class EventController : MonoBehaviour {
             gameOverScreen.SetActive(true);
         }
     }
+
+	public void PauseGame()
+	{
+		if (gameInProgress == true)
+		{
+			Debug.Log ("Game Paused");
+			gameInProgress = false;
+			if(pauseScreen != null)
+			{
+				pauseScreen.SetActive(true);
+			}
+		}
+
+		else if (gameInProgress == false)
+		{
+			Debug.Log ("Game Unpaused");
+			gameInProgress = true;
+			if(pauseScreen != null)
+			{
+				pauseScreen.SetActive(false);
+			}
+		}
+	}
 
     public void SetDialogueEventInactive()
     {
