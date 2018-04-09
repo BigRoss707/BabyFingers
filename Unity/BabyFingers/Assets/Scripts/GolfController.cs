@@ -23,6 +23,7 @@ public class GolfController : MonoBehaviour {
 
     #region PRIVATE VARIABLES
     private bool golfEventActive = false;
+	private bool pauseCheck = false;
     private float golfEventTimer = 0f;
     private float currentTime;
     private static GolfController instance = null;
@@ -50,8 +51,9 @@ public class GolfController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	    if(golfEventActive)
+	void Update () 
+	{
+	    if(golfEventActive && !pauseCheck)
         {
             golfEventTimer += Time.deltaTime;
             //dialogueTimerText.text = (currentTime - dialogueEventTimer).ToString("0.00");
@@ -68,6 +70,11 @@ public class GolfController : MonoBehaviour {
             }
             timer.text = (currentTime - golfEventTimer).ToString("0.00");
         }
+
+		if (Input.GetKeyDown ("escape")) 
+		{
+			PauseEvent();
+		}
 	}
 
     public void StartEvent()
@@ -100,6 +107,19 @@ public class GolfController : MonoBehaviour {
             ec.SetGolfEventInactive();
         }
     }
+
+	public void PauseEvent()
+	{
+		if (pauseCheck == false)
+		{
+			pauseCheck = true;
+		}
+
+		else
+		{
+			pauseCheck = false;
+		}
+	}
 
     public bool CheckGoalHasChild()
     {
