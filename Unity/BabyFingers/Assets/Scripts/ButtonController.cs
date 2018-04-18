@@ -82,6 +82,7 @@ public class ButtonController : MonoBehaviour
 			currentTime = minTime;
 		}
 
+
 		buttonEventTimer = 0f;
 		buttonEventActive = true;
 
