@@ -14,6 +14,10 @@ public class ButtonController : MonoBehaviour
 
 	public Text buttonText;
 	public Text buttonTimerText;
+
+    public Animator anim;
+    public Animator bgAnim;
+    public float animTime = 11.667f;
 	#endregion
 
 	#region PrivateVariables
@@ -81,7 +85,15 @@ public class ButtonController : MonoBehaviour
 		{
 			currentTime = minTime;
 		}
-
+        // Animation Setup
+        anim.speed = animTime / currentTime;
+        ResetAnimations();
+        anim.SetBool("Press", true);
+        EventController ec;
+        if(EventController.TryGetManager(out ec))
+        {
+            ec.Reach();
+        }
 
 		buttonEventTimer = 0f;
 		buttonEventActive = true;
@@ -105,18 +117,24 @@ public class ButtonController : MonoBehaviour
 		if(EventController.TryGetManager(out ec))
 		{
 			ec.SetButtonEventInactive();
-		}
-	}
+            ec.Idle(); //Reset bg animations
+        }
+
+        //Animation Reset
+        ResetAnimations();
+    }
 
 	public void PauseEvent()
 	{
 		if (pauseCheck == false)
 		{
+            anim.enabled = false;
 			pauseCheck = true;
 		}
 
 		else
 		{
+            anim.enabled = true;
 			pauseCheck = false;
 		}
 	}
@@ -134,14 +152,20 @@ public class ButtonController : MonoBehaviour
 	/// </summary>
 	public void Lose()
 	{
-		EventController ec;
+        EventController ec;
 		if (EventController.TryGetManager(out ec))
 		{
-			ec.Strike();
+            ec.Idle();
+            ec.Strike();
 			ec.Strike();
 			ec.Strike();
 		}
 	}
+
+    public void ResetAnimations()
+    {
+        anim.SetBool("Press", false);
+    }
 
 }
 

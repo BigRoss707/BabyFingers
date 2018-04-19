@@ -5,6 +5,8 @@ using UnityEngine;
 public class EventController : MonoBehaviour {
 
     #region PublicVariables
+    public Animator anim;
+
     [Tooltip("Strikes that determine fail condition")]
     public int currentStrikes = 0;
     public int maxStrikes = 3;
@@ -124,6 +126,11 @@ public class EventController : MonoBehaviour {
 		}
 	}
 
+    void LateUpdate()
+    {
+        ResetAnimations();
+    }
+
     public void Strike()
     {
         Debug.Log("STRIKE IN EVENT CONTROLLER");
@@ -133,6 +140,23 @@ public class EventController : MonoBehaviour {
         {
             sc.IncrementStrike();
         }
+
+        //Animation
+        if(currentStrikes == 1)
+        {
+            ResetAnimations();
+            anim.SetBool("Strike1", true);
+        }
+        else if(currentStrikes == 2)
+        {
+            ResetAnimations();
+            anim.SetBool("Strike2", true);
+        }
+        else if(currentStrikes == 3)
+        {
+            ResetAnimations();
+            anim.SetBool("Strike3", true);
+        }
     }
 
     public void EndGame()
@@ -141,8 +165,14 @@ public class EventController : MonoBehaviour {
         gameInProgress = false;
         if(gameOverScreen != null)
         {
-            gameOverScreen.SetActive(true);
+            StartCoroutine(Wait());
         }
+    }
+
+    public IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(2f);
+        gameOverScreen.SetActive(true);
     }
 
 	public void PauseGame()
@@ -308,6 +338,26 @@ public class EventController : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public void ResetAnimations()
+    {
+        anim.SetBool("Strike1", false);
+        anim.SetBool("Strike2", false);
+        anim.SetBool("Strike3", false);
+        anim.SetBool("Reach", false);
+    }
+
+    public void Reach()
+    {
+        ResetAnimations();
+        anim.SetBool("Reach", true);
+    }
+
+    public void Idle()
+    {
+        ResetAnimations();
+        anim.SetBool("Idle", true);
     }
 
 }
